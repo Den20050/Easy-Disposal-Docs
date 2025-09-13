@@ -203,36 +203,6 @@
       <p>Телефон: [номер]</p>
     </div>
 
-    <div class="buttons">
-      <button class="button accept" onclick="handleAccept()">Я согласен</button>
-      <button class="button decline" onclick="handleDecline()">Закрыть</button>
-    </div>
   </div>
-
-  <script>
-    function handleAccept() {
-      // Send acceptance to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'accept_privacy' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Политика конфиденциальности принята. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    function handleDecline() {
-      // Close without acceptance
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    // Initialize Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
-    }
-  </script>
 </body>
 </html>
