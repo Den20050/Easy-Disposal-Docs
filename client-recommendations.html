@@ -140,37 +140,6 @@
     <p>10.2. Клиенты обязаны самостоятельно контролировать выполнение работ и оплачивать услуги в соответствии с договором с Исполнителем.</p>
     <p>10.3. Все спорные ситуации решаются в порядке, установленном ГК РФ.</p>
 
-    <div class="buttons">
-      <button class="button accept" onclick="handleAccept()">Принять</button>
-      <button class="button decline" onclick="handleDecline()">Отказаться</button>
-    </div>
   </div>
-
-  <script>
-    function handleAccept() {
-      // Send acceptance to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'accept_client_recommendations' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Рекомендации приняты. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    function handleDecline() {
-      // Send decline to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'decline_client_recommendations' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Рекомендации отклонены. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    // Initialize Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
-    }
-  </script>
 </body>
 </html>
