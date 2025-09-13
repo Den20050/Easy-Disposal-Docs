@@ -31,15 +31,23 @@
       font-size: 18px;
       margin: 10px 0;
       cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      text-align: center;
       padding: 10px;
       background-color: #e9ecef;
       border-radius: 5px;
+      width: auto;
+      min-width: fit-content;
+      display: block;
+      box-sizing: border-box;
     }
     h2:hover {
       background-color: #dee2e6;
+    }
+    .accordion-subtitle {
+      font-size: 12.6px; /* 70% of 18px */
+      color: #555;
+      text-align: center;
+      margin-top: 2px;
     }
     .accordion-content {
       display: none;
@@ -103,7 +111,8 @@
     <h1>Для работы с ботом необходимо принять условия:</h1>
 
     <!-- Договор-оферта -->
-    <h2 onclick="toggleAccordion(this)">Договор-оферта ▶️</h2>
+    <h2 onclick="toggleAccordion(this)">Договор-оферта</h2>
+    <div class="accordion-subtitle">Нажмите, чтобы развернуть</div>
     <div class="accordion-content">
       <div class="preview">
         <p>Настоящий документ является официальной публичной офертой в соответствии со ст. 435, 437 ГК РФ, адресованной физическим лицам, намеренным заказать услугу по выносу бытового мусора...</p>
@@ -184,7 +193,8 @@
     </div>
 
     <!-- Соглашение о сборе, обработке и передаче персональных данных -->
-    <h2 onclick="toggleAccordion(this)">Согласие на обработку персональных данных ▶️</h2>
+    <h2 onclick="toggleAccordion(this)">Согласие на обработку персональных данных</h2>
+    <div class="accordion-subtitle">Нажмите, чтобы развернуть</div>
     <div class="accordion-content">
       <div class="preview">
         <p>Настоящее Соглашение об обработке персональных данных определяет порядок, цели и условия обработки персональных данных Пользователя (Заказчика) в рамках использования Telegram-бота...</p>
@@ -232,7 +242,8 @@
     </div>
 
     <!-- Пользовательское соглашение -->
-    <h2 onclick="toggleAccordion(this)">Пользовательское соглашение ▶️</h2>
+    <h2 onclick="toggleAccordion(this)">Пользовательское соглашение</h2>
+    <div class="accordion-subtitle">Нажмите, чтобы развернуть</div>
     <div class="accordion-content">
       <div class="preview">
         <p>Настоящее Пользовательское соглашение регулирует порядок и условия использования Telegram-бота «[НАЗВАНИЕ ПЛАТФОРМЫ]» Клиентами (Заказчиками)...</p>
@@ -324,7 +335,7 @@
 
   <script>
     function toggleAccordion(element) {
-      const content = element.nextElementSibling;
+      const content = element.nextElementSibling.nextElementSibling; // Skip subtitle
       const isActive = content.classList.contains('active');
       // Close all other accordions
       document.querySelectorAll('.accordion-content').forEach(item => {
