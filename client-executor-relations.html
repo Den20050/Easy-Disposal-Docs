@@ -161,37 +161,6 @@
     <p>Выполнение фиксируется через кнопку «Выполнено» или фото.</p>
     <p>Доказательства исполнения — фото, переписка, чеки.</p>
 
-    <div class="buttons">
-      <button class="button accept" onclick="handleAccept()">Принять</button>
-      <button class="button decline" onclick="handleDecline()">Отказаться</button>
-    </div>
   </div>
-
-  <script>
-    function handleAccept() {
-      // Send acceptance to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'accept_relations' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Положение принято. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    function handleDecline() {
-      // Send decline to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'decline_relations' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Положение отклонено. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    // Initialize Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
-    }
-  </script>
 </body>
 </html>
