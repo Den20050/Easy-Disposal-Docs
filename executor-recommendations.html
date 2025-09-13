@@ -165,37 +165,6 @@
     <p>13.2. Исполнитель несёт самостоятельную ответственность за соблюдение налогового, гражданского и трудового законодательства.</p>
     <p>13.3. Нарушения правил могут привести к блокировке аккаунта на Платформе.</p>
 
-    <div class="buttons">
-      <button class="button accept" onclick="handleAccept()">Принять</button>
-      <button class="button decline" onclick="handleDecline()">Отказаться</button>
-    </div>
   </div>
-
-  <script>
-    function handleAccept() {
-      // Send acceptance to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'accept_executor_recommendations' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Рекомендации приняты. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    function handleDecline() {
-      // Send decline to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'decline_executor_recommendations' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Рекомендации отклонены. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    // Initialize Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
-    }
-  </script>
 </body>
 </html>
