@@ -155,37 +155,6 @@
     <p>10.2. Вопросы, не урегулированные Соглашением, регулируются законодательством РФ.</p>
     <p>10.3. Если какое-либо положение Соглашения признано недействительным, остальные сохраняют силу.</p>
 
-    <div class="buttons">
-      <button class="button accept" onclick="handleAccept()">Принять</button>
-      <button class="button decline" onclick="handleDecline()">Отказаться</button>
-    </div>
   </div>
-
-  <script>
-    function handleAccept() {
-      // Send acceptance to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'accept_user_agreement' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Пользовательское соглашение принято. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    function handleDecline() {
-      // Send decline to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'decline_user_agreement' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Пользовательское соглашение отклонено. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    // Initialize Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
-    }
-  </script>
 </body>
 </html>
