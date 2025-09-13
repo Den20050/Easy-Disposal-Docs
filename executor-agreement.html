@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Принятие условий</title>
+  
+  <!-- Подключение Telegram WebApp API -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  
   <style>
     * {
       margin: 0;
@@ -78,36 +82,38 @@
       padding: 16px;
     }
 
-    /* Кнопки */
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-top: 20px;
-      margin-bottom: 30px;
+    /* Кнопки согласия */
+    .consent-buttons {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #dee2e6;
     }
 
-    button {
-      height: 52px;
-      font-size: 1.2em;
-      font-weight: 500;
+    .btn-consent {
+      padding: 12px 24px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
+      background-color: #28a745;
+      color: white;
       cursor: pointer;
-      display: flex;
+      font-size: 16px;
+      margin: 10px;
+      transition: all 0.3s;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      width: calc(100% - 20px);
+      max-width: 300px;
     }
 
-    .btn-accept {
-      background-color: #4CAF50;
-      color: white;
+    .btn-deny {
+      background-color: #6c757d;
     }
 
-    .btn-decline {
-      background-color: #F44336;
-      color: white;
+    .btn-consent:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
     }
   </style>
 </head>
@@ -335,20 +341,64 @@
     </div>
   </div>
 
-  <!-- Кнопки -->
-  <div class="buttons">
-    <button class="btn-accept">Принять все</button>
-    <button class="btn-decline">Отказаться</button>
+  <!-- Кнопки согласия -->
+  <div class="consent-buttons">
+    <button onclick="acceptConsent()" class="btn-consent">
+      ✅ Принять все
+    </button>
+    <button onclick="denyConsent()" class="btn-consent btn-deny">
+      ❌ Отказаться
+    </button>
   </div>
 
-  <!-- Логика аккордеона -->
+  <!-- Логика аккордеона и Telegram WebApp -->
   <script>
+    // Инициализация Telegram WebApp
+    if (window.Telegram && window.Telegram.WebApp) {
+      Telegram.WebApp.ready();
+      Telegram.WebApp.expand();
+    }
+
+    // Логика аккордеона
     document.querySelectorAll('.accordion-header').forEach(header => {
       header.addEventListener('click', () => {
         const accordion = header.parentElement;
         accordion.classList.toggle('active');
       });
     });
+
+    // Функция принятия согласия
+    function acceptConsent() {
+      console.log("Пользователь принял все условия");
+
+      if (window.Telegram && window.Telegram.WebApp) {
+        Telegram.WebApp.sendData(JSON.stringify({
+          callback_data: "webapp_consent_accept"
+        }));
+        Telegram.WebApp.close();
+      } else {
+        alert("Согласие принято! (Тестовый режим)");
+        if (window.close) window.close();
+      }
+    }
+
+    // Функция отказа
+    function denyConsent() {
+      console.log("Пользователь отказался");
+
+      if (window.Telegram && window.Telegram.WebApp) {
+        Telegram.WebApp.sendData(JSON.stringify({
+          callback_data: "privacy_deny"
+        }));
+        Telegram.WebApp.close();
+      } else {
+        alert("Вы отказались от условий. (Тестовый режим)");
+        if (window.close) window.close();
+      }
+    }
+
+    // Логирование
+    console.log("Страница загружена. Telegram WebApp:", !!(window.Telegram && window.Telegram.WebApp));
   </script>
 
 </body>
