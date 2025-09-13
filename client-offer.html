@@ -151,37 +151,6 @@
     <p>10.1. Договор действует до полного исполнения обязательств сторонами по конкретному заказу.</p>
     <p>10.2. Отдельные положения (о доказательствах, ответственности) сохраняют силу после завершения исполнения.</p>
 
-    <div class="buttons">
-      <button class="button accept" onclick="handleAccept()">Принять</button>
-      <button class="button decline" onclick="handleDecline()">Отказаться</button>
-    </div>
   </div>
-
-  <script>
-    function handleAccept() {
-      // Send acceptance to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'accept_offer' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Договор-оферта принята. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    function handleDecline() {
-      // Send decline to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'decline_offer' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Договор-оферта отклонена. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    // Initialize Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
-    }
-  </script>
 </body>
 </html>
