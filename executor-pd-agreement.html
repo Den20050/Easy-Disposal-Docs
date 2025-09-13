@@ -1,11 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Политика конфиденциальности</title>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Соглашение об обработке персональных данных для Исполнителя</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    p {
+      margin: 10px 0;
+    }
+    ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    .buttons {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 0 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .accept {
+      background-color: #28a745;
+      color: white;
+    }
+    .accept:hover {
+      background-color: #218838;
+    }
+    .decline {
+      background-color: #dc3545;
+      color: white;
+    }
+    .decline:hover {
+      background-color: #c82333;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <h1>Здесь будет ваша Политика конфиденциальности</h1>
-    <p>Этот документ предназначен для клиентов.</p>
+  <div class="container">
+    <h1>Соглашение о сборе, обработке и передаче персональных данных — для Исполнителя</h1>
+
+    <h2>1. Общие положения</h2>
+    <p>1.1. Оператор — [Данные]. Исполнитель — физическое лицо, регистрирующееся в боте.</p>
+    <p>1.2. Предмет: обработка персональных данных исполнителя (ФИО, телефон, город, фото/документы при необходимости, статистика заказов, реквизиты для выплат — если согласовано).</p>
+
+    <h2>2. Цели обработки</h2>
+    <p>2.1. Предоставление доступа к заказам, уведомления, аналитика и статистика, контроль соблюдения правил платформы, связь по вопросам выполнения заказов, выставление/контроль подписки.</p>
+
+    <h2>3. Передача третьим лицам</h2>
+    <p>3.1. Для исполнения функции платформы оператор может передавать данные другим исполнителям/мастер-админам (только при прямой необходимости), платежным агентам (при оплате подписки) и уполномоченным органам по требованию закона.</p>
+    <p>3.2. Любая передача происходит с соблюдением принципов минимизации данных и с уведомлением Исполнителя.</p>
+
+    <h2>4. Права и обязанности Исполнителя</h2>
+    <p>4.1. Исполнитель обязан предоставлять достоверные данные и обновлять их при изменениях; при предоставлении недостоверных данных платформа может ограничить доступ.</p>
+    <p>4.2. Исполнитель согласен, что его публичная контактная информация (имя/телефон/город) может быть видна Заказчику после принятия заказа.</p>
+
+    <h2>5. Согласие</h2>
+    <p>Регистрируясь и оплачивая подписку, я даю согласие на обработку моих персональных данных... в целях работы в рамках платформы, включая передачу данных Заказчику при принятии заказа и платежному агенту при оплате подписки.</p>
+
+    <div class="buttons">
+      <button class="button accept" onclick="handleAccept()">Принять</button>
+      <button class="button decline" onclick="handleDecline()">Отказаться</button>
+    </div>
+  </div>
+
+  <script>
+    function handleAccept() {
+      // Send acceptance to Telegram WebApp
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'accept' }));
+        window.Telegram.WebApp.close();
+      } else {
+        alert('Согласие принято. Пожалуйста, вернитесь в Telegram.');
+      }
+    }
+
+    function handleDecline() {
+      // Send decline to Telegram WebApp
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'decline' }));
+        window.Telegram.WebApp.close();
+      } else {
+        alert('Согласие отклонено. Пожалуйста, вернитесь в Telegram.');
+      }
+    }
+
+    // Initialize Telegram WebApp
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.ready();
+    }
+  </script>
 </body>
 </html>
