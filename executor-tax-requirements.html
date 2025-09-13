@@ -161,37 +161,6 @@
     <p>9.2. Платформа не является налоговым агентом и не выполняет функции бухгалтера или работодателя.</p>
     <p>9.3. Использование Платформы означает согласие Исполнителя с необходимостью самостоятельной регистрации и ведения отчётности.</p>
 
-    <div class="buttons">
-      <button class="button accept" onclick="handleAccept()">Принять</button>
-      <button class="button decline" onclick="handleDecline()">Отказаться</button>
-    </div>
   </div>
-
-  <script>
-    function handleAccept() {
-      // Send acceptance to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'accept_tax_requirements' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Требования по регистрации и налогам приняты. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    function handleDecline() {
-      // Send decline to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'decline_tax_requirements' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Требования по регистрации и налогам отклонены. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    // Initialize Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
-    }
-  </script>
 </body>
 </html>
