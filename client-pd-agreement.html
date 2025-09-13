@@ -113,37 +113,6 @@
     <h2>9. Согласие</h2>
     <p>Нажимая «Принять», я, [ФИО], даю согласие [Название оператора] на сбор, обработку и передачу моих персональных данных (ФИО, телефон, адрес, данные заказа) в целях выполнения заказа и связи с исполнителем. Я ознакомлен(а) с <a href="[ссылка]">политикой конфиденциальности</a>.</p>
 
-    <div class="buttons">
-      <button class="button accept" onclick="handleAccept()">Принять</button>
-      <button class="button decline" onclick="handleDecline()">Отказаться</button>
-    </div>
   </div>
-
-  <script>
-    function handleAccept() {
-      // Send acceptance to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'accept' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Согласие принято. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    function handleDecline() {
-      // Send decline to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'decline' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Согласие отклонено. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    // Initialize Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
-    }
-  </script>
 </body>
 </html>
