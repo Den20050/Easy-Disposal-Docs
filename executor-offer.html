@@ -162,37 +162,6 @@
     <p>11.2. Исполнитель действует самостоятельно, на свой риск и под свою ответственность.</p>
     <p>11.3. Оператор не контролирует процесс выполнения заказов, не устанавливает график работы, не назначает вознаграждение и не несёт обязанностей работодателя.</p>
 
-    <div class="buttons">
-      <button class="button accept" onclick="handleAccept()">Принять</button>
-      <button class="button decline" onclick="handleDecline()">Отказаться</button>
-    </div>
   </div>
-
-  <script>
-    function handleAccept() {
-      // Send acceptance to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'accept_executor_offer' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Договор-оферта принята. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    function handleDecline() {
-      // Send decline to Telegram WebApp
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'decline_executor_offer' }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert('Договор-оферта отклонена. Пожалуйста, вернитесь в Telegram.');
-      }
-    }
-
-    // Initialize Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
-    }
-  </script>
 </body>
 </html>
