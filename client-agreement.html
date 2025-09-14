@@ -378,6 +378,12 @@
             // Показываем уведомление пользователю
             alert("✅ Согласие принято! Данные отправлены боту.");
             
+            // Закрываем WebApp после отправки данных
+            setTimeout(() => {
+              window.Telegram.WebApp.close();
+              console.log("✅ WebApp закрыт");
+            }, 1000);
+            
           } catch (error) {
             console.error("❌ Ошибка при отправке данных:", error);
             alert("Ошибка отправки данных: " + error.message);
@@ -416,6 +422,12 @@
             
             // Показываем уведомление пользователю
             alert("❌ Вы отказались от условий. Данные отправлены боту.");
+            
+            // Закрываем WebApp после отправки данных
+            setTimeout(() => {
+              window.Telegram.WebApp.close();
+              console.log("✅ WebApp закрыт");
+            }, 1000);
             
           } catch (error) {
             console.error("❌ Ошибка при отправке отказа:", error);
