@@ -360,44 +360,7 @@
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.ready();
       window.Telegram.WebApp.expand();
-      
-      // Настраиваем MainButton для согласия
-      window.Telegram.WebApp.MainButton.setText("✅ Принять все");
-      window.Telegram.WebApp.MainButton.show();
-      
-      // Настраиваем BackButton для отказа
-      window.Telegram.WebApp.BackButton.setText("❌ Отказаться");
-      window.Telegram.WebApp.BackButton.show();
-      
-      // Обработчик нажатия MainButton
-      window.Telegram.WebApp.MainButton.onClick(function() {
-        console.log("🟢 MainButton нажата - согласие");
-        acceptConsent();
-      });
-      
-      // Обработчик нажатия BackButton
-      window.Telegram.WebApp.BackButton.onClick(function() {
-        console.log("🔴 BackButton нажата - отказ");
-        denyConsent();
-      });
-      
-      // Дополнительная проверка WebApp
-      console.log("📱 WebApp объект:", window.Telegram.WebApp);
-      console.log("📱 MainButton объект:", window.Telegram.WebApp.MainButton);
-      console.log("📱 BackButton объект:", window.Telegram.WebApp.BackButton);
-      console.log("📱 sendData функция:", typeof window.Telegram.WebApp.sendData);
-      console.log("📱 close функция:", typeof window.Telegram.WebApp.close);
-      console.log("📱 ready функция:", typeof window.Telegram.WebApp.ready);
-      console.log("📱 expand функция:", typeof window.Telegram.WebApp.expand);
-      
-      // Проверяем все доступные методы
-      console.log("📱 Все методы WebApp:", Object.getOwnPropertyNames(window.Telegram.WebApp));
-      console.log("📱 Все методы MainButton:", Object.getOwnPropertyNames(window.Telegram.WebApp.MainButton));
-      console.log("📱 Все методы BackButton:", Object.getOwnPropertyNames(window.Telegram.WebApp.BackButton));
-      
-      console.log("✅ Telegram WebApp инициализирован с MainButton и BackButton");
-      console.log("📱 WebApp версия:", window.Telegram.WebApp.version);
-      console.log("📱 WebApp платформа:", window.Telegram.WebApp.platform);
+      console.log("✅ Telegram WebApp инициализирован");
     }
 
     // Логика аккордеона
@@ -523,21 +486,11 @@
     console.log("🔍 Telegram WebApp доступен:", !!(window.Telegram && window.Telegram.WebApp));
     
     if (window.Telegram && window.Telegram.WebApp) {
-      console.log("📱 Telegram WebApp версия:", window.Telegram.WebApp.version);
-      console.log("📱 Платформа:", window.Telegram.WebApp.platform);
+      console.log("📱 WebApp версия:", window.Telegram.WebApp.version);
+      console.log("📱 WebApp платформа:", window.Telegram.WebApp.platform);
+      console.log("📱 WebApp initDataUnsafe:", window.Telegram.WebApp.initDataUnsafe);
+      console.log("📱 WebApp доступные методы:", Object.getOwnPropertyNames(window.Telegram.WebApp));
     }
-    
-    // Проверяем, что функции определены
-    console.log("🔧 acceptConsent определена:", typeof acceptConsent);
-    console.log("🔧 denyConsent определена:", typeof denyConsent);
-    
-    // Добавляем обработчик кликов для отладки
-    document.addEventListener('click', function(e) {
-      if (e.target.tagName === 'BUTTON') {
-        console.log("🖱️ Клик по кнопке:", e.target.textContent.trim());
-        console.log("🖱️ onclick атрибут:", e.target.getAttribute('onclick'));
-      }
-    });
   </script>
 
 </body>
