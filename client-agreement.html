@@ -316,36 +316,82 @@
 
     // Функция принятия согласия
     function acceptConsent() {
+      console.log("🟢 acceptConsent() вызвана");
       console.log("Пользователь принял все условия");
 
-      if (window.Telegram && window.Telegram.WebApp) {
-        Telegram.WebApp.sendData(JSON.stringify({
-          callback_data: "webapp_consent_accept"
-        }));
-        Telegram.WebApp.close();
-      } else {
-        alert("Согласие принято! (Тестовый режим)");
-        if (window.close) window.close();
+      try {
+        if (window.Telegram && window.Telegram.WebApp) {
+          console.log("📱 Telegram WebApp доступен, отправляем данные...");
+          console.log("📱 WebApp версия:", window.Telegram.WebApp.version);
+          console.log("📱 WebApp платформа:", window.Telegram.WebApp.platform);
+          
+          // Отправляем простую строку "accepted" как в рабочем боте
+          const data = "accepted";
+          console.log("📤 Отправляем данные:", data);
+          
+          try {
+            window.Telegram.WebApp.sendData(data);
+            console.log("✅ Данные отправлены успешно");
+          } catch (error) {
+            console.error("❌ Ошибка при отправке данных:", error);
+            alert("Ошибка отправки данных: " + error.message);
+          }
+        } else {
+          console.log("🌐 Telegram WebApp недоступен, используем fallback");
+          alert("Согласие принято! (Тестовый режим)");
+          if (window.close) {
+            window.close();
+          }
+        }
+      } catch (error) {
+        console.error("❌ Ошибка в acceptConsent():", error);
+        alert("Ошибка: " + error.message);
       }
     }
 
     // Функция отказа
     function denyConsent() {
+      console.log("🔴 denyConsent() вызвана");
       console.log("Пользователь отказался");
 
-      if (window.Telegram && window.Telegram.WebApp) {
-        Telegram.WebApp.sendData(JSON.stringify({
-          callback_data: "privacy_deny"
-        }));
-        Telegram.WebApp.close();
-      } else {
-        alert("Вы отказались от условий. (Тестовый режим)");
-        if (window.close) window.close();
+      try {
+        if (window.Telegram && window.Telegram.WebApp) {
+          console.log("📱 Отправляем отказ через WebApp...");
+          
+          // Отправляем простую строку "declined" как в рабочем боте
+          const data = "declined";
+          console.log("📤 Отправляем данные:", data);
+          
+          try {
+            window.Telegram.WebApp.sendData(data);
+            console.log("✅ Отказ отправлен успешно");
+          } catch (error) {
+            console.error("❌ Ошибка при отправке отказа:", error);
+            alert("Ошибка отправки отказа: " + error.message);
+          }
+        } else {
+          console.log("🌐 Telegram WebApp недоступен, используем fallback");
+          alert("Вы отказались от условий. (Тестовый режим)");
+          if (window.close) {
+            window.close();
+          }
+        }
+      } catch (error) {
+        console.error("❌ Ошибка в denyConsent():", error);
+        alert("Ошибка: " + error.message);
       }
     }
 
-    // Логирование
-    console.log("Страница загружена. Telegram WebApp:", !!(window.Telegram && window.Telegram.WebApp));
+    // Логирование для отладки
+    console.log("📜 Страница загружена");
+    console.log("🔍 Telegram WebApp доступен:", !!(window.Telegram && window.Telegram.WebApp));
+    
+    if (window.Telegram && window.Telegram.WebApp) {
+      console.log("📱 WebApp версия:", window.Telegram.WebApp.version);
+      console.log("📱 WebApp платформа:", window.Telegram.WebApp.platform);
+      console.log("📱 WebApp initDataUnsafe:", window.Telegram.WebApp.initDataUnsafe);
+      console.log("📱 WebApp доступные методы:", Object.getOwnPropertyNames(window.Telegram.WebApp));
+    }
   </script>
 
 </body>
