@@ -290,20 +290,30 @@
 
   <!-- Кнопки согласия -->
   <div class="consent-buttons">
-    <button onclick="acceptConsent()" class="btn-consent">
+    <button id="acceptBtn" class="btn-consent">
       ✅ Принять все
     </button>
-    <button onclick="denyConsent()" class="btn-consent btn-deny">
+    <button id="denyBtn" class="btn-consent btn-deny">
       ❌ Отказаться
     </button>
   </div>
 
   <!-- Логика аккордеона и Telegram WebApp -->
   <script>
-    // Инициализация Telegram WebApp
+    // Логирование для отладки
+    console.log("📜 Страница загружена");
+    console.log("🔍 Telegram WebApp доступен:", !!(window.Telegram && window.Telegram.WebApp));
+    
     if (window.Telegram && window.Telegram.WebApp) {
+      console.log("📱 WebApp версия:", window.Telegram.WebApp.version);
+      console.log("📱 WebApp платформа:", window.Telegram.WebApp.platform);
+      console.log("📱 WebApp initDataUnsafe:", window.Telegram.WebApp.initDataUnsafe);
+      console.log("📱 WebApp доступные методы:", Object.getOwnPropertyNames(window.Telegram.WebApp));
+      
+      // Инициализация Telegram WebApp
       Telegram.WebApp.ready();
       Telegram.WebApp.expand();
+      console.log("✅ Telegram WebApp инициализирован");
     }
 
     // Логика аккордеона
@@ -314,9 +324,41 @@
       });
     });
 
+    // Инициализация обработчиков кнопок
+    function initializeButtons() {
+      console.log("🔧 Инициализируем обработчики кнопок");
+      
+      const acceptBtn = document.getElementById('acceptBtn');
+      const denyBtn = document.getElementById('denyBtn');
+      
+      if (acceptBtn) {
+        console.log("✅ Кнопка 'Принять' найдена");
+        acceptBtn.addEventListener('click', acceptConsent);
+      } else {
+        console.error("❌ Кнопка 'Принять' не найдена");
+      }
+      
+      if (denyBtn) {
+        console.log("✅ Кнопка 'Отказаться' найдена");
+        denyBtn.addEventListener('click', denyConsent);
+      } else {
+        console.error("❌ Кнопка 'Отказаться' не найдена");
+      }
+    }
+
+    // Инициализация после загрузки DOM
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeButtons);
+    } else {
+      // DOM уже загружен
+      initializeButtons();
+    }
+
     // Функция принятия согласия
-    function acceptConsent() {
+    function acceptConsent(event) {
       console.log("🟢 acceptConsent() вызвана");
+      console.log("🖱️ Событие клика:", event);
+      console.log("🎯 Цель события:", event.target);
       console.log("Пользователь принял все условия");
 
       try {
@@ -332,6 +374,10 @@
           try {
             window.Telegram.WebApp.sendData(data);
             console.log("✅ Данные отправлены успешно");
+            
+            // Показываем уведомление пользователю
+            alert("✅ Согласие принято! Данные отправлены боту.");
+            
           } catch (error) {
             console.error("❌ Ошибка при отправке данных:", error);
             alert("Ошибка отправки данных: " + error.message);
@@ -350,8 +396,10 @@
     }
 
     // Функция отказа
-    function denyConsent() {
+    function denyConsent(event) {
       console.log("🔴 denyConsent() вызвана");
+      console.log("🖱️ Событие клика:", event);
+      console.log("🎯 Цель события:", event.target);
       console.log("Пользователь отказался");
 
       try {
@@ -365,6 +413,10 @@
           try {
             window.Telegram.WebApp.sendData(data);
             console.log("✅ Отказ отправлен успешно");
+            
+            // Показываем уведомление пользователю
+            alert("❌ Вы отказались от условий. Данные отправлены боту.");
+            
           } catch (error) {
             console.error("❌ Ошибка при отправке отказа:", error);
             alert("Ошибка отправки отказа: " + error.message);
