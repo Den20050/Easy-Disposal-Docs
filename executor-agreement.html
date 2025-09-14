@@ -350,13 +350,54 @@
       ❌ Отказаться
     </button>
   </div>
+  
+  <!-- Telegram WebApp MainButton (скрытая) -->
+  <div id="telegram-main-button" style="display: none;"></div>
 
   <!-- Логика аккордеона и Telegram WebApp -->
   <script>
     // Инициализация Telegram WebApp
     if (window.Telegram && window.Telegram.WebApp) {
-      Telegram.WebApp.ready();
-      Telegram.WebApp.expand();
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+      
+      // Настраиваем MainButton для согласия
+      window.Telegram.WebApp.MainButton.setText("✅ Принять все");
+      window.Telegram.WebApp.MainButton.show();
+      
+      // Настраиваем BackButton для отказа
+      window.Telegram.WebApp.BackButton.setText("❌ Отказаться");
+      window.Telegram.WebApp.BackButton.show();
+      
+      // Обработчик нажатия MainButton
+      window.Telegram.WebApp.MainButton.onClick(function() {
+        console.log("🟢 MainButton нажата - согласие");
+        acceptConsent();
+      });
+      
+      // Обработчик нажатия BackButton
+      window.Telegram.WebApp.BackButton.onClick(function() {
+        console.log("🔴 BackButton нажата - отказ");
+        denyConsent();
+      });
+      
+      // Дополнительная проверка WebApp
+      console.log("📱 WebApp объект:", window.Telegram.WebApp);
+      console.log("📱 MainButton объект:", window.Telegram.WebApp.MainButton);
+      console.log("📱 BackButton объект:", window.Telegram.WebApp.BackButton);
+      console.log("📱 sendData функция:", typeof window.Telegram.WebApp.sendData);
+      console.log("📱 close функция:", typeof window.Telegram.WebApp.close);
+      console.log("📱 ready функция:", typeof window.Telegram.WebApp.ready);
+      console.log("📱 expand функция:", typeof window.Telegram.WebApp.expand);
+      
+      // Проверяем все доступные методы
+      console.log("📱 Все методы WebApp:", Object.getOwnPropertyNames(window.Telegram.WebApp));
+      console.log("📱 Все методы MainButton:", Object.getOwnPropertyNames(window.Telegram.WebApp.MainButton));
+      console.log("📱 Все методы BackButton:", Object.getOwnPropertyNames(window.Telegram.WebApp.BackButton));
+      
+      console.log("✅ Telegram WebApp инициализирован с MainButton и BackButton");
+      console.log("📱 WebApp версия:", window.Telegram.WebApp.version);
+      console.log("📱 WebApp платформа:", window.Telegram.WebApp.platform);
     }
 
     // Логика аккордеона
@@ -369,36 +410,92 @@
 
     // Функция принятия согласия
     function acceptConsent() {
+      console.log("🟢 acceptConsent() вызвана");
       console.log("Пользователь принял все условия");
 
-      if (window.Telegram && window.Telegram.WebApp) {
-        Telegram.WebApp.sendData(JSON.stringify({
-          callback_data: "webapp_consent_accept"
-        }));
-        Telegram.WebApp.close();
-      } else {
-        alert("Согласие принято! (Тестовый режим)");
-        if (window.close) window.close();
+      try {
+        if (window.Telegram && window.Telegram.WebApp) {
+          console.log("📱 Telegram WebApp доступен, отправляем данные...");
+          console.log("📱 WebApp версия:", window.Telegram.WebApp.version);
+          console.log("📱 WebApp платформа:", window.Telegram.WebApp.platform);
+          
+          // Отправляем простую строку "accepted" как в рабочем боте
+          const data = "accepted";
+          console.log("📤 Отправляем данные:", data);
+          
+          try {
+            window.Telegram.WebApp.sendData(data);
+            console.log("✅ Данные отправлены успешно");
+          } catch (error) {
+            console.error("❌ Ошибка при отправке данных:", error);
+            alert("Ошибка отправки данных: " + error.message);
+          }
+        } else {
+          console.log("🌐 Telegram WebApp недоступен, используем fallback");
+          alert("Согласие принято! (Тестовый режим)");
+          if (window.close) {
+            window.close();
+          }
+        }
+      } catch (error) {
+        console.error("❌ Ошибка в acceptConsent():", error);
+        alert("Ошибка: " + error.message);
       }
     }
 
     // Функция отказа
     function denyConsent() {
+      console.log("🔴 denyConsent() вызвана");
       console.log("Пользователь отказался");
 
-      if (window.Telegram && window.Telegram.WebApp) {
-        Telegram.WebApp.sendData(JSON.stringify({
-          callback_data: "privacy_deny"
-        }));
-        Telegram.WebApp.close();
-      } else {
-        alert("Вы отказались от условий. (Тестовый режим)");
-        if (window.close) window.close();
+      try {
+        if (window.Telegram && window.Telegram.WebApp) {
+          console.log("📱 Отправляем отказ через WebApp...");
+          
+          // Отправляем простую строку "declined" как в рабочем боте
+          const data = "declined";
+          console.log("📤 Отправляем данные:", data);
+          
+          try {
+            window.Telegram.WebApp.sendData(data);
+            console.log("✅ Отказ отправлен успешно");
+          } catch (error) {
+            console.error("❌ Ошибка при отправке отказа:", error);
+            alert("Ошибка отправки отказа: " + error.message);
+          }
+        } else {
+          console.log("🌐 Telegram WebApp недоступен, используем fallback");
+          alert("Вы отказались от условий. (Тестовый режим)");
+          if (window.close) {
+            window.close();
+          }
+        }
+      } catch (error) {
+        console.error("❌ Ошибка в denyConsent():", error);
+        alert("Ошибка: " + error.message);
       }
     }
 
-    // Логирование
-    console.log("Страница загружена. Telegram WebApp:", !!(window.Telegram && window.Telegram.WebApp));
+    // Логирование для отладки
+    console.log("📜 Страница загружена");
+    console.log("🔍 Telegram WebApp доступен:", !!(window.Telegram && window.Telegram.WebApp));
+    
+    if (window.Telegram && window.Telegram.WebApp) {
+      console.log("📱 Telegram WebApp версия:", window.Telegram.WebApp.version);
+      console.log("📱 Платформа:", window.Telegram.WebApp.platform);
+    }
+    
+    // Проверяем, что функции определены
+    console.log("🔧 acceptConsent определена:", typeof acceptConsent);
+    console.log("🔧 denyConsent определена:", typeof denyConsent);
+    
+    // Добавляем обработчик кликов для отладки
+    document.addEventListener('click', function(e) {
+      if (e.target.tagName === 'BUTTON') {
+        console.log("🖱️ Клик по кнопке:", e.target.textContent.trim());
+        console.log("🖱️ onclick атрибут:", e.target.getAttribute('onclick'));
+      }
+    });
   </script>
 
 </body>
