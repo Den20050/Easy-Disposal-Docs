@@ -2,7 +2,12 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Согласие на обработку ПДн</title>
+  
+  <!-- Подключение Telegram WebApp API -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -110,11 +115,19 @@
   </div>
 
   <div class="actions">
-    <button class="accept">Принять</button>
-    <button class="reject">Отказаться</button>
+    <button class="accept" onclick="acceptConsent()">Принять</button>
+    <button class="reject" onclick="denyConsent()">Отказаться</button>
   </div>
 
   <script>
+    // Инициализация Telegram WebApp
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+      console.log("✅ Telegram WebApp инициализирован");
+    }
+
+    // Функция разворачивания/сворачивания дополнительного контента
     function toggleMore() {
       const more = document.getElementById("more");
       const btn = document.querySelector(".toggle-btn");
@@ -126,6 +139,61 @@
         btn.textContent = "Нажмите чтобы развернуть";
       }
     }
+
+    // Функция принятия согласия
+    function acceptConsent() {
+      console.log("🟢 Принятие согласия...");
+      
+      if (window.Telegram && window.Telegram.WebApp) {
+        console.log("📤 Отправляем 'accepted' в бота");
+        
+        // Отправляем простую строку "accepted" как ожидает бот
+        window.Telegram.WebApp.sendData("accepted");
+        
+        // Закрываем WebApp
+        window.Telegram.WebApp.close();
+        
+        console.log("✅ WebApp закрыт, возвращаемся в бота");
+      } else {
+        // Fallback для тестирования в браузере
+        console.log("🌐 Telegram WebApp недоступен, используем fallback");
+        alert("Согласие принято! Возвращаемся в бота...");
+        
+        if (window.close) {
+          window.close();
+        }
+      }
+    }
+
+    // Функция отказа
+    function denyConsent() {
+      console.log("🔴 Отказ от согласия...");
+      
+      if (window.Telegram && window.Telegram.WebApp) {
+        console.log("📤 Отправляем 'declined' в бота");
+        
+        // Отправляем простую строку "declined" как ожидает бот
+        window.Telegram.WebApp.sendData("declined");
+        
+        // Закрываем WebApp
+        window.Telegram.WebApp.close();
+        
+        console.log("✅ WebApp закрыт, возвращаемся в бота");
+      } else {
+        // Fallback для тестирования в браузере
+        console.log("🌐 Telegram WebApp недоступен, используем fallback");
+        alert("Вы отказались от согласия. Возвращаемся в бота...");
+        
+        if (window.close) {
+          window.close();
+        }
+      }
+    }
+
+    // Логирование для отладки
+    console.log("📜 Страница загружена");
+    console.log("🔍 Telegram WebApp доступен:", !!(window.Telegram && window.Telegram.WebApp));
   </script>
+
 </body>
 </html>
