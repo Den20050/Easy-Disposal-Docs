@@ -126,19 +126,7 @@
     <p>11.2. Вопросы, не урегулированные Соглашением, регулируются законодательством РФ.</p>
     <p>11.3. Недействительность отдельного положения не влияет на действительность остальных.</p>
 
-    <button class="close-btn" onclick="closeAgreement()">Закрыть</button>
   </div>
-
-  <script>
-    function closeAgreement() {
-      if (window.Telegram && window.Telegram.WebApp) {
-        Telegram.WebApp.close();
-      } else {
-        alert("Окно соглашения закрыто (тестовый режим).");
-        if (window.close) window.close();
-      }
-    }
-  </script>
 
 </body>
 </html>
