@@ -119,48 +119,22 @@
 
       <h3>10. Согласие</h3>
       <p>10.1. «Нажимая «Принять», я, как Исполнитель, даю согласие [Название оператора] на сбор и обработку моих персональных данных в целях регистрации в системе, получения доступа к заказам, ведения статистики и связи с Заказчиками. Я ознакомлен(а) с политикой конфиденциальности и принимаю условия Договора-оферты для исполнителей.»</p>
-  </div>
+    </div>
 
     <button class="toggle-btn" onclick="toggleMore()">Нажмите чтобы развернуть</button>
   </div>
 
   <div class="actions">
-    <button class="accept" onclick="acceptConsent()" id="acceptBtn">✅ Принять все условия</button>
-    <button class="reject" onclick="denyConsent()" id="rejectBtn">❌ Отказаться</button>
+    <button class="accept" onclick="acceptConsent()">✅ Принять все условия</button>
+    <button class="reject" onclick="denyConsent()">❌ Отказаться</button>
   </div>
-  
+
   <script>
-    // Более надежная инициализация Telegram WebApp
-    function initTelegramWebApp() {
-      console.log("🔧 Начинаем инициализацию Telegram WebApp...");
-      
+    // Инициализация Telegram WebApp (БЕЗ АВТОМАТИЧЕСКОГО ЗАКРЫТИЯ)
     if (window.Telegram && window.Telegram.WebApp) {
-        console.log("✅ Telegram WebApp API найден");
-        
-        try {
       window.Telegram.WebApp.ready();
-          console.log("✅ WebApp.ready() выполнен");
-          
       window.Telegram.WebApp.expand();
-          console.log("✅ WebApp.expand() выполнен");
-          
-          console.log("✅ Telegram WebApp инициализирован для исполнителей");
-          console.log("📱 WebApp версия:", window.Telegram.WebApp.version);
-          console.log("📱 WebApp платформа:", window.Telegram.WebApp.platform);
-          
-        } catch (error) {
-          console.error("❌ Ошибка инициализации WebApp:", error);
-        }
-      } else {
-        console.warn("⚠️ Telegram WebApp API недоступен");
-      }
-    }
-    
-    // Инициализация при загрузке
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initTelegramWebApp);
-    } else {
-      initTelegramWebApp();
+      console.log("✅ Telegram WebApp инициализирован для исполнителей");
     }
 
     // Функция разворачивания/сворачивания дополнительного контента
@@ -170,69 +144,29 @@
       if (more.classList.contains("hidden")) {
         more.classList.remove("hidden");
         btn.textContent = "Свернуть";
-    } else {
+      } else {
         more.classList.add("hidden");
         btn.textContent = "Нажмите чтобы развернуть";
       }
     }
 
-    // Функция принятия согласия
+    // Функция принятия согласия (БЕЗ АВТОМАТИЧЕСКОГО ЗАКРЫТИЯ)
     function acceptConsent() {
-      console.log("🟢 acceptConsent() вызвана - Исполнитель принимает согласие...");
-      console.log("🔍 Проверяем доступность Telegram WebApp...");
-      
-      // Детальная диагностика WebApp
-      console.log("🔍 window.Telegram:", window.Telegram);
-      console.log("🔍 window.Telegram.WebApp:", window.Telegram?.WebApp);
-      console.log("🔍 WebApp.isExpanded:", window.Telegram?.WebApp?.isExpanded);
-      console.log("🔍 WebApp.MainButton:", window.Telegram?.WebApp?.MainButton);
-      console.log("🔍 WebApp.sendData функция:", typeof window.Telegram?.WebApp?.sendData);
+      console.log("🟢 Исполнитель принимает согласие...");
       
       try {
         if (window.Telegram && window.Telegram.WebApp) {
-          console.log("✅ Telegram WebApp доступен");
-          
-          // Проверяем, что sendData существует
-          if (typeof window.Telegram.WebApp.sendData !== 'function') {
-            console.error("❌ WebApp.sendData не является функцией!");
-            alert("Ошибка: WebApp.sendData не доступна");
-            return;
-          }
-          
           console.log("📤 Отправляем 'accepted' в бота для исполнителя");
           
-          try {
-            // Отправляем простую строку "accepted" как ожидает бот
-            const dataToSend = "accepted";
-            console.log("📦 Данные для отправки:", dataToSend, "(тип:", typeof dataToSend, ")");
-            
-            window.Telegram.WebApp.sendData(dataToSend);
-            console.log("✅ sendData('accepted') выполнен успешно");
-            
-            // Показываем пользователю, что данные отправлены
-            alert("✅ Согласие отправлено в бота! Окно закроется через 2 секунды...");
-            
-            // Увеличиваем задержку перед закрытием
-            setTimeout(() => {
-              try {
-                console.log("🔒 Пытаемся закрыть WebApp...");
-                window.Telegram.WebApp.close();
-                console.log("✅ WebApp закрыт, возвращаемся в бота для регистрации исполнителя");
-              } catch (closeError) {
-                console.error("❌ Ошибка при закрытии WebApp:", closeError);
-                alert("Ошибка закрытия WebApp. Попробуйте вручную.");
-              }
-            }, 2000); // 2 секунды вместо 100мс
-            
-          } catch (sendError) {
-            console.error("❌ Ошибка при отправке данных:", sendError);
-            console.error("❌ Детали ошибки:", {
-              name: sendError.name,
-              message: sendError.message,
-              stack: sendError.stack
-            });
-            alert("Ошибка отправки данных: " + sendError.message);
-          }
+          // Отправляем данные
+          window.Telegram.WebApp.sendData("accepted");
+          console.log("✅ Данные 'accepted' отправлены успешно");
+          
+          // НЕ закрываем WebApp автоматически - это может вызывать краш!
+          // window.Telegram.WebApp.close(); // УБРАНО!
+          
+          // Показываем сообщение об успехе
+          alert("✅ Согласие отправлено в бота! Можете закрыть это окно вручную.");
           
         } else {
           // Fallback для тестирования в браузере
@@ -243,62 +177,30 @@
             window.close();
           }
         }
+        
       } catch (error) {
-        console.error("❌ Общая ошибка в acceptConsent():", error);
-        console.error("❌ Детали ошибки:", {
-          name: error.name,
-          message: error.message,
-          stack: error.stack
-        });
-        alert("Произошла ошибка: " + error.message);
+        console.error("❌ Ошибка в acceptConsent():", error);
+        alert("Ошибка: " + error.message);
       }
     }
 
-    // Функция отказа
+    // Функция отказа (БЕЗ АВТОМАТИЧЕСКОГО ЗАКРЫТИЯ)
     function denyConsent() {
-      console.log("🔴 denyConsent() вызвана - Исполнитель отказывается от согласия...");
-      console.log("🔍 Проверяем доступность Telegram WebApp...");
+      console.log("🔴 Исполнитель отказывается от согласия...");
       
       try {
         if (window.Telegram && window.Telegram.WebApp) {
-          console.log("✅ Telegram WebApp доступен");
-          
-          // Проверяем, что sendData существует
-          if (typeof window.Telegram.WebApp.sendData !== 'function') {
-            console.error("❌ WebApp.sendData не является функцией!");
-            alert("Ошибка: WebApp.sendData не доступна");
-            return;
-          }
-          
           console.log("📤 Отправляем 'declined' в бота для исполнителя");
           
-          try {
-            // Отправляем простую строку "declined" как ожидает бот
-            const dataToSend = "declined";
-            console.log("📦 Данные для отправки:", dataToSend, "(тип:", typeof dataToSend, ")");
-            
-            window.Telegram.WebApp.sendData(dataToSend);
-            console.log("✅ sendData('declined') выполнен успешно");
-            
-            // Показываем пользователю, что данные отправлены
-            alert("❌ Отказ отправлен в бота! Окно закроется через 2 секунды...");
-            
-            // Увеличиваем задержку перед закрытием
-            setTimeout(() => {
-              try {
-                console.log("🔒 Пытаемся закрыть WebApp...");
-                window.Telegram.WebApp.close();
-                console.log("✅ WebApp закрыт, возвращаемся в бота");
-              } catch (closeError) {
-                console.error("❌ Ошибка при закрытии WebApp:", closeError);
-                alert("Ошибка закрытия WebApp. Попробуйте вручную.");
-              }
-            }, 2000); // 2 секунды
-            
-          } catch (sendError) {
-            console.error("❌ Ошибка при отправке данных:", sendError);
-            alert("Ошибка отправки данных: " + sendError.message);
-          }
+          // Отправляем данные
+          window.Telegram.WebApp.sendData("declined");
+          console.log("✅ Данные 'declined' отправлены успешно");
+          
+          // НЕ закрываем WebApp автоматически - это может вызывать краш!
+          // window.Telegram.WebApp.close(); // УБРАНО!
+          
+          // Показываем сообщение об успехе
+          alert("❌ Отказ отправлен в бота! Можете закрыть это окно вручную.");
           
         } else {
           // Fallback для тестирования в браузере
@@ -309,15 +211,16 @@
             window.close();
           }
         }
+        
       } catch (error) {
-        console.error("❌ Общая ошибка в denyConsent():", error);
-        alert("Произошла ошибка: " + error.message);
+        console.error("❌ Ошибка в denyConsent():", error);
+        alert("Ошибка: " + error.message);
       }
     }
 
-    // Логирование для отладки (ТОЧНО КАК В КЛИЕНТСКОМ ФАЙЛЕ)
+    // Логирование для отладки
     console.log("📜 Страница согласия для исполнителей загружена");
-    console.log("🔍 Telegram WebApp доступен:", !!(window.Telegram && window.Telegram.WebApp))
+    console.log("🔍 Telegram WebApp доступен:", !!(window.Telegram && window.Telegram.WebApp));
   </script>
 
 </body>
